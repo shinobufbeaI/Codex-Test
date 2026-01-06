@@ -125,7 +125,7 @@ input[type="range"]::-moz-range-thumb {
 
 .status-header {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px;
   margin-bottom: 16px;
 }
@@ -196,19 +196,32 @@ input[type="range"]::-moz-range-thumb {
 
 .segment-list li {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 6px;
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: #0f131c;
 }
 
+.segment-list li.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(44, 198, 186, 0.4);
+}
+
 .segment-list .name {
   font-weight: 600;
 }
 
-.segment-list .duration {
+.segment-list .meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
   color: var(--muted);
+}
+
+.segment-list .laps {
+  font-variant-numeric: tabular-nums;
 }
 
 @media (min-width: 768px) {

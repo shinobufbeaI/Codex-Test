@@ -10,11 +10,36 @@ function calcSegmentProgress(split, timeSec) {
   return (clamped - split.start) / (split.end - split.start);
 }
 
+// 純粋関数: 周回・距離の状況を計算する
+function calculateLapAndDistance(split, timeSec) {
+  if (!split) {
+    return {
+      currentLap: null,
+      lapCount: null,
+      distanceCovered: null,
+      totalDistance: null,
+    };
+  }
+
+  const progress = calcSegmentProgress(split, timeSec);
+  const lapCount = split.laps || 1;
+  const totalDistance = split.totalDistanceKm || 0;
+  const lapFloat = lapCount * progress;
+  const currentLap = lapFloat <= 0 ? 1 : Math.min(Math.ceil(lapFloat), lapCount);
+  const distanceCovered = totalDistance * progress;
+
+  return { currentLap, lapCount, distanceCovered, totalDistance };
+}
+
 // 時刻を hh:mm 形式で返す
 function formatTime(seconds) {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
+function formatDistance(km) {
+  return `${km.toFixed(1)} km`;
 }
 
 // UI描画: 区間リスト
@@ -26,13 +51,24 @@ function renderSegmentList(listEl, splits, currentTime) {
     name.className = 'name';
     name.textContent = split.segment;
 
-    const span = document.createElement('span');
-    span.className = 'duration';
-    const duration = split.end - split.start;
-    const isActive = currentTime >= split.start && currentTime <= split.end;
-    span.textContent = `${formatTime(duration)}${isActive ? ' ・進行中' : ''}`;
+    const meta = document.createElement('div');
+    meta.className = 'meta';
 
-    li.append(name, span);
+    const duration = split.end - split.start;
+    const lapInfo = `${split.laps || 1}周 / ${formatDistance(split.totalDistanceKm || 0)}`;
+    const isActive = currentTime >= split.start && currentTime <= split.end;
+
+    const durationSpan = document.createElement('span');
+    durationSpan.className = 'duration';
+    durationSpan.textContent = `${formatTime(duration)}${isActive ? ' ・進行中' : ''}`;
+
+    const lapSpan = document.createElement('span');
+    lapSpan.className = 'laps';
+    lapSpan.textContent = lapInfo;
+
+    meta.append(durationSpan, lapSpan);
+
+    li.append(name, meta);
     if (isActive) li.classList.add('active');
     listEl.appendChild(li);
   });
@@ -62,6 +98,8 @@ async function init() {
   const currentSegmentEl = document.getElementById('currentSegment');
   const segmentProgressEl = document.getElementById('segmentProgress');
   const remainingTimeEl = document.getElementById('remainingTime');
+  const lapStatusEl = document.getElementById('lapStatus');
+  const distanceStatusEl = document.getElementById('distanceStatus');
   const segmentListEl = document.getElementById('segmentList');
   const progressTrackEl = document.getElementById('progressTrack');
   const segmentGridEl = document.getElementById('segmentGrid');
@@ -100,11 +138,27 @@ async function init() {
 
     const segment = findSegmentAtTime(athlete.splits, currentTime);
     const progress = calcSegmentProgress(segment, currentTime);
+    const lapDistance = calculateLapAndDistance(segment, currentTime);
     const remaining = Math.max(0, athlete.splits[athlete.splits.length - 1].end - currentTime);
 
     currentSegmentEl.textContent = segment ? segment.segment : '未スタート/ゴール後';
     segmentProgressEl.textContent = `${Math.round(progress * 100)}%`;
     remainingTimeEl.textContent = formatTime(remaining);
+
+    if (lapDistance.currentLap && lapDistance.lapCount) {
+      lapStatusEl.textContent = `${lapDistance.currentLap} / ${lapDistance.lapCount} 周`; 
+    } else {
+      lapStatusEl.textContent = '--';
+    }
+
+    if (lapDistance.totalDistance !== null) {
+      const distanceText = `${formatDistance(lapDistance.distanceCovered || 0)} / ${formatDistance(
+        lapDistance.totalDistance || 0
+      )}`;
+      distanceStatusEl.textContent = distanceText;
+    } else {
+      distanceStatusEl.textContent = '--';
+    }
 
     renderProgressBar(progressTrackEl, segmentGridEl, athlete.splits, currentTime, maxTime);
     renderSegmentList(segmentListEl, athlete.splits, currentTime);
