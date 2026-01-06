@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>トライアスロン進捗ビューア</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <h1>トライアスロン進捗ビューア</h1>
+    <p class="subtitle">ダミーのチップ計測データで、レース中の選手位置を手軽に確認できます。</p>
+  </header>
+
+  <main class="layout">
+    <section class="card controls" aria-label="操作エリア">
+      <div class="field">
+        <label for="athleteSelect">選手を選択</label>
+        <select id="athleteSelect" aria-label="選手選択"></select>
+      </div>
+
+      <div class="field">
+        <div class="label-row">
+          <label for="timeSlider">レース時間</label>
+          <span id="maxTime" class="hint">--:--</span>
+        </div>
+        <input type="range" id="timeSlider" min="0" value="0" step="30" aria-label="レース時間スライダー">
+        <div class="time-readout">
+          <span>現在: </span><span id="currentTime" class="time-text">--:--</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card status" aria-label="進捗表示エリア">
+      <div class="status-header">
+        <div>
+          <p class="status-label">現在の区間</p>
+          <p id="currentSegment" class="status-value">--</p>
+        </div>
+        <div>
+          <p class="status-label">区間内の進捗</p>
+          <p id="segmentProgress" class="status-value">--%</p>
+        </div>
+        <div>
+          <p class="status-label">ゴールまで</p>
+          <p id="remainingTime" class="status-value">--:--</p>
+        </div>
+      </div>
+
+      <div class="progress-bar" aria-label="全体進捗バー">
+        <div class="progress-track" id="progressTrack"></div>
+        <div class="segment-grid" id="segmentGrid"></div>
+      </div>
+
+      <ul id="segmentList" class="segment-list" aria-label="区間一覧"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
