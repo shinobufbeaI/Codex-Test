@@ -1,0 +1,48 @@
+{
+  "athletes": [
+    {
+      "id": "A001",
+      "name": "佐藤 翔",
+      "splits": [
+        { "segment": "Swim", "start": 0, "end": 3600, "laps": 2, "totalDistanceKm": 3.8 },
+        { "segment": "T1", "start": 3600, "end": 3900, "laps": 1, "totalDistanceKm": 0.2 },
+        { "segment": "Bike", "start": 3900, "end": 18000, "laps": 6, "totalDistanceKm": 180 },
+        { "segment": "T2", "start": 18000, "end": 18300, "laps": 1, "totalDistanceKm": 0.3 },
+        { "segment": "Run", "start": 18300, "end": 25200, "laps": 10, "totalDistanceKm": 42.2 }
+      ]
+    },
+    {
+      "id": "A002",
+      "name": "高橋 陽菜",
+      "splits": [
+        { "segment": "Swim", "start": 0, "end": 4000, "laps": 2, "totalDistanceKm": 3.8 },
+        { "segment": "T1", "start": 4000, "end": 4300, "laps": 1, "totalDistanceKm": 0.25 },
+        { "segment": "Bike", "start": 4300, "end": 20000, "laps": 7, "totalDistanceKm": 180 },
+        { "segment": "T2", "start": 20000, "end": 20300, "laps": 1, "totalDistanceKm": 0.3 },
+        { "segment": "Run", "start": 20300, "end": 27000, "laps": 10, "totalDistanceKm": 42.2 }
+      ]
+    },
+    {
+      "id": "A003",
+      "name": "山田 颯斗",
+      "splits": [
+        { "segment": "Swim", "start": 0, "end": 3200, "laps": 2, "totalDistanceKm": 3.8 },
+        { "segment": "T1", "start": 3200, "end": 3500, "laps": 1, "totalDistanceKm": 0.2 },
+        { "segment": "Bike", "start": 3500, "end": 17000, "laps": 5, "totalDistanceKm": 180 },
+        { "segment": "T2", "start": 17000, "end": 17300, "laps": 1, "totalDistanceKm": 0.25 },
+        { "segment": "Run", "start": 17300, "end": 24000, "laps": 10, "totalDistanceKm": 42.2 }
+      ]
+    },
+    {
+      "id": "A004",
+      "name": "鈴木 マリア",
+      "splits": [
+        { "segment": "Swim", "start": 0, "end": 4500, "laps": 2, "totalDistanceKm": 3.8 },
+        { "segment": "T1", "start": 4500, "end": 4800, "laps": 1, "totalDistanceKm": 0.25 },
+        { "segment": "Bike", "start": 4800, "end": 21000, "laps": 6, "totalDistanceKm": 180 },
+        { "segment": "T2", "start": 21000, "end": 21300, "laps": 1, "totalDistanceKm": 0.25 },
+        { "segment": "Run", "start": 21300, "end": 28500, "laps": 10, "totalDistanceKm": 42.2 }
+      ]
+    }
+  ]
+}
